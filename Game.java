@@ -77,6 +77,8 @@ public class Game extends Thread {
         playerAttackList.clear();
         enemyList.clear();
         enemyAttackList.clear();
+        enemyList2.clear();
+        enemyAttackList2.clear();
     }
 
     private void keyProcess() {
@@ -104,11 +106,26 @@ public class Game extends Thread {
                 if (enemy.hp <= 0) {
                     hitSound.start();
                     enemyList.remove(enemy);
+                    
+                    score += 1000;
+                }
+            }
+            for (int j = 0; j < enemyList.size(); j++) {
+                enemy2 = enemyList2.get(j);
+                if (playerAttack.x > enemy2.x && playerAttack.x < enemy2.x + enemy2.width && playerAttack.y > enemy2.y && playerAttack.y < enemy2.y + enemy2.height) {
+                    enemy2.hp  -= playerAttack.attack;
+                    playerAttackList.remove(playerAttack);
+                }
+                if (enemy2.hp <= 0) {
+                    hitSound.start();
+                    enemyList2.remove(enemy2);
+                    
                     score += 1000;
                 }
             }
         }
     }
+    
 
     private void enemyAppearProcess() {
         if (cnt % 80 == 0) {
@@ -125,6 +142,11 @@ public class Game extends Thread {
         for (int i = 0; i< enemyList.size(); i++) {
             enemy = enemyList.get(i);//i
             enemy.move();
+            
+        }
+        for (int i = 0; i< enemyList2.size(); i++) {
+        	enemy2 = enemyList2.get(i);//i
+            enemy2.move();
         }
     }
 
@@ -136,21 +158,38 @@ public class Game extends Thread {
         }
 
         for (int i = 0; i < enemyAttackList.size(); i++) {
-            enemyAttack = enemyAttackList.get(i);
-            enemyAttack.fire();
+            enemyAttack = enemyAttackList.get(i);           
+            enemyAttack.fire();            
+            for (int j = 0; j < enemyAttackList2.size(); j++) {            	
+                enemyAttack2 = enemyAttackList2.get(i);         
+                enemyAttack2.fire();
+            }
 
             if (enemyAttack.x > playerX & enemyAttack.x < playerX + playerWidth && enemyAttack.y > playerY && enemyAttack.y < playerY + playerHeight) {
                 hitSound.start();
                 playerHp -= enemyAttack.attack;
                 enemyAttackList.remove(enemyAttack);
+                //playerHp -= enemyAttack2.attack;
+                //enemyAttackList2.remove(enemyAttack2);
                 if (playerHp <= 0) isOver = true;
+            
             }
+            //if (enemyAttack2.x > playerX & enemyAttack2.x < playerX + playerWidth && enemyAttack2.y > playerY && enemyAttack2.y < playerY + playerHeight) {
+               // hitSound.start();
+                //playerHp -= enemyAttack.attack;
+                //enemyAttackList.remove(enemyAttack);
+                //playerHp -= enemyAttack2.attack;
+               // enemyAttackList2.remove(enemyAttack2);
+              //  if (playerHp <= 0) isOver = true;
+            
+            //}
         }
     }
 
     public void gameDraw(Graphics g) {
         playerDraw(g);
         enemyDraw(g);
+        enemyDraw2(g);
         infoDraw(g);
     }
 
@@ -178,13 +217,31 @@ public class Game extends Thread {
     public void enemyDraw(Graphics g) {
         for (int i = 0; i< enemyList.size(); i++) {
             enemy = enemyList.get(i);
+            //enemy2 = enemyList2.get(i);
             g.drawImage(enemy.image, enemy.x, enemy.y, null);
+            //g.drawImage(enemy2.image, enemy2.x, enemy2.y, null);
             g.setColor(Color.GREEN);
             g.fillRect(enemy.x + 1, enemy.y - 40, enemy.hp * 15, 20);
+            //g.fillRect(enemy2.x + 1, enemy2.y - 40, enemy2.hp * 15, 20);
         }
         for (int i = 0; i < enemyAttackList.size(); i++) {
             enemyAttack = enemyAttackList.get(i);
             g.drawImage(enemyAttack.image, enemyAttack.x, enemyAttack.y, null);
+        }
+    }
+    public void enemyDraw2(Graphics g) {
+        for (int i = 0; i< enemyList2.size(); i++) {
+            //enemy = enemyList.get(i);
+            enemy2 = enemyList2.get(i);
+            //g.drawImage(enemy.image, enemy.x, enemy.y, null);
+            g.drawImage(enemy2.image, enemy2.x, enemy2.y, null);
+            g.setColor(Color.GREEN);
+            //g.fillRect(enemy.x + 1, enemy.y - 40, enemy.hp * 15, 20);
+            g.fillRect(enemy2.x + 1, enemy2.y - 40, enemy2.hp * 15, 20);
+        }
+        for (int i = 0; i < enemyAttackList2.size(); i++) {
+            enemyAttack2 = enemyAttackList2.get(i);
+            g.drawImage(enemyAttack2.image, enemyAttack2.x, enemyAttack2.y, null);
         }
     }
 
