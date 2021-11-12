@@ -110,7 +110,7 @@ public class Game extends Thread {
                     score += 1000;
                 }
             }
-            for (int j = 0; j < enemyList.size(); j++) {
+            for (int j = 0; j < enemyList2.size(); j++) {
                 enemy2 = enemyList2.get(j);
                 if (playerAttack.x > enemy2.x && playerAttack.x < enemy2.x + enemy2.width && playerAttack.y > enemy2.y && playerAttack.y < enemy2.y + enemy2.height) {
                     enemy2.hp  -= playerAttack.attack;
@@ -170,19 +170,11 @@ public class Game extends Thread {
                 playerHp -= enemyAttack.attack;
                 enemyAttackList.remove(enemyAttack);
                 //playerHp -= enemyAttack2.attack;
-                //enemyAttackList2.remove(enemyAttack2);
+                enemyAttackList2.remove(enemyAttack2);
                 if (playerHp <= 0) isOver = true;
             
             }
-            //if (enemyAttack2.x > playerX & enemyAttack2.x < playerX + playerWidth && enemyAttack2.y > playerY && enemyAttack2.y < playerY + playerHeight) {
-               // hitSound.start();
-                //playerHp -= enemyAttack.attack;
-                //enemyAttackList.remove(enemyAttack);
-                //playerHp -= enemyAttack2.attack;
-               // enemyAttackList2.remove(enemyAttack2);
-              //  if (playerHp <= 0) isOver = true;
             
-            //}
         }
     }
 
