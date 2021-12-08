@@ -8,7 +8,7 @@ public class Game extends Thread {
     private int cnt;
     private int score;
 
-    private Image player = new ImageIcon("src/images/player.png").getImage();
+    private Image player = new ImageIcon("src/images/player.gif").getImage();
 
     private int playerX, playerY;
     private int playerWidth = player.getWidth(null);
@@ -86,7 +86,7 @@ public class Game extends Thread {
         if (down && playerY + playerHeight + playerSpeed < Main.SCREEN_HEIGHT) playerY += playerSpeed;
         if (left && playerX - playerSpeed > 0) playerX -= playerSpeed;
         if (right && playerX + playerWidth + playerSpeed < Main.SCREEN_WIDTH) playerX += playerSpeed;
-        if (shooting && cnt % 5 == 0) {//원래는 15 하지만 5가 시원함
+        if (shooting && cnt % 5 == 0) {// 5가 시원함
             playerAttack = new PlayerAttack(playerX + 222, playerY + 25);
             playerAttackList.add(playerAttack);
         }
